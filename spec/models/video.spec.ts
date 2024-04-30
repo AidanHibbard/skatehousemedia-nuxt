@@ -16,7 +16,7 @@ describe('Video Model', () => {
     });
   });
   describe('#bySlug', () => {
-    it('Should return the first video wwith a matching slug', () => {
+    it('Should return the first video with a matching slug', () => {
       expect(VideoModel.bySlug('photo-contest-update')).toEqual({
         slug: 'photo-contest-update',
         src: 'https://assets.skatehousemedia.com/Photo-Contest-Update.mp4',
@@ -24,6 +24,11 @@ describe('Video Model', () => {
           'https://assets.skatehousemedia.com/thumbnails/Photo-Contest-Update.jpg',
         title: 'Photo Contest Update',
       });
+    });
+  });
+  describe('#byRandom', () => {
+    it('Should return a random video', () => {
+      expect(VideoModel.byRandom()).toBeTypeOf('object');
     });
   });
   describe('#paginate', () => {
