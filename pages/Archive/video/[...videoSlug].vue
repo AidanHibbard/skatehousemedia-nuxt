@@ -1,27 +1,22 @@
 <script setup lang="ts">
 import VideoModel from '~/models/video.model';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/vue/24/solid';
 
 const route = useRoute();
+const router = useRouter();
 const { videoSlug } = route.params;
 const slug = videoSlug[0];
 
+const pagination = VideoModel.paginate(slug);
+
 const state = reactive({
-  currentVideo: VideoModel.bySlug(slug ?? ''),
-  nextVideo: null,
-  previousVideo: null,
+  ...pagination,
   showCountDown: false,
   countDown: 0,
 });
 
-function goToPreviousVideo() {
-  // Your logic to navigate to the previous video
-}
-
-function goToNextVideo() {
-  // Your logic to navigate to the next video
-}
-
 function handleVideoEnd() {
+  if (!state.nextVideo) return;
   state.showCountDown = true;
   state.countDown = 15;
   const timer = setInterval(() => {
@@ -31,15 +26,21 @@ function handleVideoEnd() {
       state.countDown = 0;
       state.showCountDown = false;
       clearInterval(timer);
-      goToNextVideo();
+      router.push(`/archive/video/${state.nextVideo?.slug}`);
     }
   }, 1000);
 }
 
-const countdownGradient = computed(() => {
+const countDownGradient = computed(() => {
   if (state.countDown === 0) return 'bg-card';
   const percentage = (state.countDown / 15) * 100;
-  return `linear-gradient(to left, #31363F ${percentage}%, #21363C ${percentage}%)`;
+  return `linear-gradient(to left, rgba(128,128,128,0.5) ${percentage}%, #31363F ${percentage}%)`;
+});
+
+const buttonDistance = computed(() => {
+  if (state.previousVideo && state.nextVideo) return 'justify-between';
+  if (state.previousVideo && !state.nextVideo) return 'justify-start';
+  if (!state.previousVideo && state.nextVideo) return 'justify-end';
 });
 </script>
 
@@ -55,33 +56,25 @@ const countdownGradient = computed(() => {
       @ended="handleVideoEnd"
     />
 
-    <div class="flex justify-between m-8 w-3/5 mx-auto">
-      <div class="flex items-center">
+    <div class="flex m-8 w-3/5 mx-auto" :class="buttonDistance">
+      <div v-if="state.previousVideo" class="flex items-center">
         <button
           class="bg-card text-white p-2 rounded hover:bg-gray-700 flex items-center"
-          @click="goToPreviousVideo"
+          @click="router.push(`/archive/video/${state.previousVideo?.slug}`)"
         >
-          <img
-            :src="state.currentVideo.thumbnail"
-            class="w-8 h-8 mr-2"
-            :alt="state.currentVideo.title"
-          />
-          <span class="text-ellipsis">{{ state.currentVideo.title }}</span>
+          <ArrowLeftIcon class="h-6 w-6 mr-2" />
+          <span class="text-ellipsis">{{ state.previousVideo?.title }}</span>
         </button>
       </div>
 
-      <div class="flex items-center">
+      <div v-if="state.nextVideo" class="flex items-center">
         <button
           class="bg-card text-white p-2 rounded hover:bg-gray-700 flex items-center transition-all duration-500"
-          :style="{ background: countdownGradient }"
-          @click="goToNextVideo"
+          :style="{ background: countDownGradient }"
+          @click="router.push(`/archive/video/${state.nextVideo?.slug}`)"
         >
-          <span class="text-ellipsis">{{ state.currentVideo.title }}</span>
-          <img
-            :src="state.currentVideo.thumbnail"
-            class="w-8 h-8 ml-2"
-            :alt="state.currentVideo.title"
-          />
+          <span class="text-ellipsis">{{ state.nextVideo?.title }}</span>
+          <ArrowRightIcon class="h-6 w-6 ml-2" />
         </button>
       </div>
     </div>
