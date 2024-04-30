@@ -49,10 +49,3 @@ watch(
     </div>
   </div>
 </template>
-
-<style scoped>
-.grid,
-#query {
-  max-width: 90%;
-}
-</style>

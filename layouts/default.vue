@@ -6,5 +6,3 @@
     <slot />
   </main>
 </template>
-
-<style></style>

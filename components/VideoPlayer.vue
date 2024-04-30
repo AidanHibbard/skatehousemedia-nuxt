@@ -9,7 +9,7 @@ const emits = defineEmits(['ended']);
 
 <template>
   <video
-    class="h-3/5 w-3/5 rounded-lg mx-auto"
+    class="lg:h-3/5 lg:w-3/5 sm:w-full lg:rounded-lg md:rounded-lg mx-auto"
     controls
     preload="none"
     :poster="props.thumbnail"
@@ -19,9 +19,3 @@ const emits = defineEmits(['ended']);
     Your browser does not support the video tag.
   </video>
 </template>
-
-<style scoped>
-video {
-  aspect-ratio: 16/9;
-}
-</style>

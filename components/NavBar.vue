@@ -62,5 +62,3 @@ const userIsViewingArchive = computed(() => {
     </nav>
   </header>
 </template>
-
-<style scoped></style>

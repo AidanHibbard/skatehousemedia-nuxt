@@ -1,7 +1,8 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: false,
-});
+const props = defineProps<{
+  title: string;
+  thumbnail: string;
+}>();
 </script>
 
 <template>
