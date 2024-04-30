@@ -9,7 +9,7 @@ const emits = defineEmits(['ended']);
 
 <template>
   <video
-    class="rounded-lg mx-auto"
+    class="h-3/5 w-3/5 rounded-lg mx-auto"
     controls
     preload="none"
     :poster="props.thumbnail"
