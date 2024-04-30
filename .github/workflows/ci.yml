@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: '22.x'
       - run: npm ci
-      - run: npm run spec:coverage
+      - run: npm run spec:unit
   lint:
     name: Lint
     runs-on: ubuntu-latest

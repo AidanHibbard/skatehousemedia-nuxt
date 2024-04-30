@@ -14,7 +14,8 @@
     "lint:fix": "prettier --write --list-different . && npm run lint:eslint --fix",
     "spec:unit": "vitest --coverage",
     "ci": "npm run lint && npm run spec:unit",
-    "update:snapshots": "npm run spec:unit -- -u"
+    "update:snapshots": "npm run spec:unit -- -u",
+    "prepare": "husky"
   },
   "dependencies": {
     "@heroicons/vue": "^2.1.3",
@@ -24,11 +25,15 @@
   },
   "devDependencies": {
     "@nuxt/eslint": "^0.3.10",
+    "@nuxt/test-utils": "^3.12.1",
     "@nuxtjs/tailwindcss": "^6.12.0",
+    "@vitest/coverage-v8": "^1.5.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
+    "husky": "^9.0.11",
     "prettier": "^3.2.5",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vitest": "^1.5.2"
   }
 }
