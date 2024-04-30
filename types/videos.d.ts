@@ -1,0 +1,1 @@
+type Videos = Array<Video>;
