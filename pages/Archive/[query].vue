@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import VideoModel from '~/models/video.model';
 
+const route = useRoute();
+const { query } = route.params;
+
+const preset = (query as string) ?? '';
+
 const state = reactive({
-  query: '',
-  filteredVideos: VideoModel.byName('') as Videos,
+  query: preset,
+  filteredVideos: VideoModel.byName(preset) as Videos,
 });
 
 watch(
@@ -28,7 +33,7 @@ watch(
       <a
         v-for="video in state.filteredVideos"
         :key="video.slug"
-        :href="`/archive/${video.slug}/`"
+        :href="`/archive/video/${video.slug}/`"
         class="hover:shadow-lg block rounded-lg overflow-hidden"
       >
         <img
